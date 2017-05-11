@@ -36,13 +36,13 @@ public class FileReader {
 					scanner.close();
 					TextRepresentation textRep = new TextRepresentation(file.getName(), text);
 					listOfAllWords.addAll(textRep.getMap().keySet());
-					if(data.containsKey(textRep.getType())){
-						data.get(textRep.getType()).add(textRep);
+					if(data.containsKey(textRep.getReal_Type())){
+						data.get(textRep.getReal_Type()).add(textRep);
 					}
 					else{
 						ArrayList<TextRepresentation> textArray = new ArrayList<TextRepresentation>();
 						textArray.add(textRep);
-						data.put(textRep.getType(), textArray);
+						data.put(textRep.getReal_Type(), textArray);
 					}
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();

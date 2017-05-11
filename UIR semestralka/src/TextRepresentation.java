@@ -1,22 +1,25 @@
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 public class TextRepresentation {
 
+	private String name;
 	private HashMap<String,Integer> textMap;
-	private String type;
-	private int[] vector;
+	private String real_type;
+	private String class_type;
 
 	TextRepresentation(String name,String text){
+		this.name = name;
 		textMap = new HashMap<String,Integer>(20);
 		
 		String[] temp = name.split("_|\\.");
-		this.type=temp[1];
+		this.real_type=temp[1];
 		
 		 StringTokenizer st = new StringTokenizer(text);
 	     while (st.hasMoreTokens()) {
-	    	 String token = st.nextToken();
+	    	 String token = st.nextToken().toLowerCase();
 	    	 if(!textMap.containsKey(token)){
 	    		 textMap.put(token, 1);
 	    	 }
@@ -27,36 +30,24 @@ public class TextRepresentation {
 	     }
 	}
 	
-	public void createVector(HashSet<String> set){
-		int[] vec = new int[set.size()];
-		int i = 0;
-		
-		for(String s:set){
-			if(textMap.containsKey(s)){
-				vec[i] = textMap.get(s);
-			}
-			else{
-				vec[i] = 0;
-			}
-			i++;
-		}
-		this.vector = vec;
+	public String getName(){
+		return this.name;
 	}
-	
+		
 	public HashMap<String,Integer> getMap(){
 		return this.textMap;
 	}
 	
-	public String getType(){
-		return this.type;
+	public String getReal_Type(){
+		return this.real_type;
 	}
 	
-	public int[] getVector() {
-		return vector;
+	public String getClass_type() {
+		return class_type;
 	}
 
-	public void setVector(int[] vector) {
-		this.vector = vector;
+	public void setClass_type(String class_type) {
+		this.class_type = class_type;
 	}
 	
 }

@@ -1,8 +1,9 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 
-public class CorpusRepresentation {
+public class CorpusRepresentation implements Iterable<ArrayList<TextRepresentation>> {
 	
 	private HashMap<String,ArrayList<TextRepresentation>> data;
 	private HashSet<String> listOfAllWords;
@@ -18,6 +19,11 @@ public class CorpusRepresentation {
 
 	public HashSet<String> getListOfAllWords() {
 		return listOfAllWords;
+	}
+
+	@Override
+	public Iterator<ArrayList<TextRepresentation>> iterator() {
+		return this.getData().values().iterator();
 	}
 
 }
