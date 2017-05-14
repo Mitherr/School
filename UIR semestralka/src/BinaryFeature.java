@@ -1,7 +1,7 @@
 import java.util.HashSet;
 import java.util.Set;
 
-public class PositionAndFrequencyFeature implements TextFeatures {
+public class BinaryFeature implements TextFeatures {
 
 	@Override
 	public double returnDistance(TextRepresentation first, TextRepresentation second) {
@@ -21,11 +21,11 @@ public class PositionAndFrequencyFeature implements TextFeatures {
 			appearence2 = 0;
 			
 			if(first.getMap().containsKey(key)){
-				appearence1 = first.getMap().get(key);
+				appearence1 = 1;
 			}
 			
 			if(second.getMap().containsKey(key)){
-				appearence2 = second.getMap().get(key);
+				appearence2 = 1;
 			}
 			
 			x = appearence1 - appearence2;
@@ -34,9 +34,17 @@ public class PositionAndFrequencyFeature implements TextFeatures {
 			
 		}
 		
-		return Math.sqrt(distance);	
+		return Math.sqrt(distance);		
 	}
 	
+	@Override
+	public double returnOccurence(ClassRepresentation classRep,String key){
+		return 1;
+	}
 	
+	@Override
+	public String toString(){
+		return "binary";
+	}
 
 }

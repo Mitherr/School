@@ -1,25 +1,23 @@
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.StringTokenizer;
 
 public class TextRepresentation {
 
-	private String name;
 	private HashMap<String,Integer> textMap;
-	private String real_type;
-	private String class_type;
+	private String realType;
+	private String classType;
+	private CzechStemmerAgressive stemmer = new CzechStemmerAgressive();
 
 	TextRepresentation(String name,String text){
-		this.name = name;
 		textMap = new HashMap<String,Integer>(20);
 		
 		String[] temp = name.split("_|\\.");
-		this.real_type=temp[1];
+		this.realType=temp[1];
 		
-		 StringTokenizer st = new StringTokenizer(text);
-	     while (st.hasMoreTokens()) {
-	    	 String token = st.nextToken().toLowerCase();
+		 String[] st = text.split(" ");
+	     for(String token:st) {
+	    	 token = token.toLowerCase();
+	    	 token = stemmer.stem(token);
+	    	 if(token.length()!=0){
 	    	 if(!textMap.containsKey(token)){
 	    		 textMap.put(token, 1);
 	    	 }
@@ -27,27 +25,48 @@ public class TextRepresentation {
 	    		 int help = textMap.get(token)+1;
 	    		 textMap.put(token, help);
 	    	 }
+	    	 }
 	     }
 	}
 	
-	public String getName(){
-		return this.name;
+	TextRepresentation(String text){
+		textMap = new HashMap<String,Integer>(20);
+		
+		 String[] st = text.split(" ");
+	     for(String token:st) {
+	    	 token = token.toLowerCase();
+	    	 token = stemmer.stem(token);
+	    	 if(token.length()!=0){
+	    	 if(!textMap.containsKey(token)){
+	    		 textMap.put(token, 1);
+	    	 }
+	    	 else{
+	    		 int help = textMap.get(token)+1;
+	    		 textMap.put(token, help);
+	    	 }
+	    	 }
+	     }
+	}
+	
+	TextRepresentation(HashMap<String,Integer> textMap,String type){
+		this.textMap = textMap;
+		this.realType = type;
 	}
 		
 	public HashMap<String,Integer> getMap(){
 		return this.textMap;
 	}
 	
-	public String getReal_Type(){
-		return this.real_type;
+	public String getRealType(){
+		return this.realType;
 	}
 	
-	public String getClass_type() {
-		return class_type;
+	public String getClassType() {
+		return classType;
 	}
 
-	public void setClass_type(String class_type) {
-		this.class_type = class_type;
+	public void setClassType(String classType) {
+		this.classType = classType;
 	}
 	
 }

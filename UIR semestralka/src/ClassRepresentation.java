@@ -1,22 +1,56 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class ClassRepresentation {
-	
-	HashMap<String,Integer> classMap;
+	private HashMap<String,Integer> classMap;
 	private String name;
+	private int numberOfTexts;
+	private int vocabulary;
 	
-	ClassRepresentation(ArrayList<TextRepresentation> texts){
+	ClassRepresentation(String name){
 		HashMap<String,Integer> classMap = new HashMap<String,Integer>();
-		
-		for(TextRepresentation textRep:texts){
-			for(Map.Entry<String, Integer> e : textRep.getMap().entrySet()){
-				classMap.merge(e.getKey(), e.getValue(), Integer:sum);
-			}
-		}
 		this.classMap = classMap;
-		this.name = texts.get(0).getReal_Type();
+		this.numberOfTexts = 0;
+		this.name = name;
+		this.vocabulary = 0;
 	}
+	
+	public void addTextRepresentation(TextRepresentation textRep){		
+		for(Map.Entry<String,Integer> e: textRep.getMap().entrySet()){
+			this.classMap.merge(e.getKey(), e.getValue(), Integer::sum);
+		}
+		this.numberOfTexts++;
+	}
+	
+	public void countVocabulary(TextFeatures feature){
+		int count = 0;
+		
+		for(String s:this.getClassMap().keySet()){
+				count += feature.returnOccurence(this, s);
+		}
+		
+		this.vocabulary = count;		
+	}
+	
+	public int getNumberOfTexts(){
+		return this.numberOfTexts;
+	}
+	
+	public HashMap<String, Integer> getClassMap() {
+		return classMap;
+	}
+
+	public String getName() {
+		return name;
+	}
+	
+	public int getVocabulary(TextFeatures feature){
+		if(this.vocabulary == 0){
+			countVocabulary(feature);
+		}
+		return this.vocabulary;
+	}
+
 
 }
